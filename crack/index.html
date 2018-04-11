@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>点击选择验证码 - cos120's home page</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "\u70b9\u51fb\u9009\u62e9\u9a8c\u8bc1\u7801";
+    var mkdocs_page_input_path = "crack.md";
+    var mkdocs_page_url = "/crack/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> cos120's home page</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1 current">
+		
+    <a class="current" href="./">点击选择验证码</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#_1">破解点击选择验证码</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l3" href="#_2">训练命令</a></li>
+        
+            <li><a class="toctree-l3" href="#_3">目录结构</a></li>
+        
+            <li><a class="toctree-l3" href="#_4">定位器训练</a></li>
+        
+            <li><a class="toctree-l3" href="#_7">分类器训练</a></li>
+        
+        </ul>
+    
+
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">cos120's home page</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>点击选择验证码</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="_1">破解点击选择验证码</h1>
+<p><a href="https://github.com/cos120/captcha_crack">仓库地址</a></p>
+<h2 id="_2">训练命令</h2>
+<ul>
+<li><code>sh run.sh yolo_train</code> - 训练定位器</li>
+<li><code>sh run.sh yolo_vaild</code> - 批量前向定位器，保存结果为记事本。</li>
+<li><code>sh run.sh classifier_train</code> - 训练分类器</li>
+<li><code>sh run.sh classifier_valid</code> - 批量前向分类器</li>
+</ul>
+<h2 id="_3">目录结构</h2>
+<pre><code>.
+├── Makefile
+├── README.md
+├── cfg
+│   ├── chinese.data                    分类器训练配置文件
+│   ├── chinese_character.cfg           分类器网络配置文件
+│   ├── yolo-origin.cfg                 定位器网络配置文件
+│   ├── yolo-origin.data                定位器训练配置文件
+│   ├── yolo-valid.cfg                  定位器批量前向网络配置文件
+│   └── yolo-valid.data                 定位器批量前向配置文件
+├── darknet                             darknet二进制
+├── data
+│   ├── chinese_label.names             分类器标签名称
+│   └── yolo.names                      定位器标签名称
+├── examples
+├── include
+├── model
+│   └── character.dict                  分类器编码，需要替换
+├── python
+│   ├── __init__.py
+│   ├── darknet.py                      darknet python接口
+│   ├── sampleImage.py      
+│   └── server.py                       部署模型接口
+├── results                             yolo前向结果保存位置
+│   └── comp4_det_test_character.txt
+├── run.sh                              训练脚本
+├── scripts                             voc数据集转换脚本
+└── src                                 darknet源代码
+</code></pre>
+<h2 id="_4">定位器训练</h2>
+<h3 id="_5">文件准备</h3>
+<p>准备如下两个文件</p>
+<pre><code>cfg
+├── yolo-origin.cfg
+└── yolo-origin.data
+</code></pre>
+
+<h4 id="yolo-origincfg"><code>yolo-origin.cfg</code></h4>
+<pre><code>[convolutional]
+size=1
+stride=1
+pad=1
+filters=30
+activation=linear
+
+[region]
+anchors =  1.3221, 1.73145, 3.19275, 4.00944, 5.05587, 8.09892, 9.47112, 4.84053, 11.2364, 10.0071
+bias_match=1
+classes=1
+coords=4
+num=5
+softmax=1
+jitter=.3
+rescore=1
+
+object_scale=5
+noobject_scale=1
+class_scale=1
+coord_scale=1
+
+absolute=1
+thresh = .6
+random=1
+</code></pre>
+
+<ul>
+<li><code>filter</code>为30，其计算公式为<script type="math/tex; mode=display">filter=num\cdot(classes + coord + 1)</script>
+<script type="math/tex; mode=display">30 = 5 \cdot (1 + 4 + 1)</script>
+</li>
+<li><code>num</code>代表每个框最多预测多少物体。</li>
+<li><code>classes</code>代表一共有多少个类，这里为1。</li>
+<li><code>coord</code>代表回归的四个位置，分别为<code>&lt;x&gt; &lt;y&gt; &lt;width&gt; &lt;height&gt;</code>代表物体中心点相对位置以及物体相对大小。如<code>你</code>的标签为<code>0 0.2 0.75 0. 16 0.18</code>，<code>好</code>的标签为<code>0 0.7 0.15 0. 15 0. 17</code>。<img alt="label示例" src="../img/axis.png" /></li>
+</ul>
+<h4 id="yolo-origindata"><code>yolo-origin.data</code></h4>
+<pre><code>classes= 1
+train = /some_path/train.txt
+valid = /some_path/train.txt
+names = darknet/data/yolo.names
+backup = darknet/debug
+</code></pre>
+
+<ul>
+<li><code>classes</code>代表一共有多少</li>
+<li><code>train</code>代表存放训练数据路径位置文件</li>
+<li><code>valid</code>代表存档前向测试数据路径文件</li>
+</ul>
+<pre><code>products/trainval/0000172_6_0.jpg
+products/trainval/0000172_6_1.jpg
+products/trainval/0000172_6_2.jpg
+</code></pre>
+
+<p>label与图片在同一文件夹下<img alt="" src="../img/path.png" /></p>
+<ul>
+<li>
+<p><code>names</code>前向时类别名称 (track, dog,bicycle)<img alt="" src="../img/yolo_sample.png" /></p>
+</li>
+<li>
+<p><code>backup</code>训练后权重保存位置</p>
+</li>
+</ul>
+<h3 id="_6">训练</h3>
+<p>准备好文件后下载对应的权重，开始训练</p>
+<pre><code class="Bash">wget https://pjreddie.com/media/files/darknet19_448.conv.23
+sh run.sh yolo_train
+</code></pre>
+
+<h2 id="_7">分类器训练</h2>
+<h3 id="_8">准备文件</h3>
+<pre><code>cfg
+├── chinese_character.cfg
+└── chinese.data
+</code></pre>
+
+<h4 id="chinese_charactercfg"><code>chinese_character.cfg</code></h4>
+<pre><code>[convolutional]
+batch_normalize=1
+filters=1024
+size=3
+stride=1
+pad=1
+activation=leaky
+
+[convolutional]
+filters=3549
+size=1
+stride=1
+pad=1
+activation=leaky
+
+[avgpool]
+
+[softmax]
+groups=1
+
+[cost]
+type=sse
+</code></pre>
+
+<ul>
+<li><code>filters</code> 最后一层卷基层代表汉字分类个数，这里为<code>3549</code></li>
+</ul>
+<h4 id="chinesedata"><code>Chinese.data</code></h4>
+<pre><code>classes=3549
+train  = darknet/chinese_character_train/train.list
+valid  = chinese_character_train/train.list
+labels = darknet/data/chinese_label.names
+backup = darknet/model/classifier
+top=100
+</code></pre>
+
+<ul>
+<li><code>classes</code> 代表分类个数</li>
+<li><code>train</code>代表存放训练数据路径位置文件</li>
+<li><code>valid</code>代表存档前向测试数据路径文件</li>
+</ul>
+<pre><code>products/trainval/0000172_abcdefg.jpg
+products/trainval/0000173_abcdfge.jpg
+products/trainval/0000174_bcabfge.jpg
+</code></pre>
+
+<ul>
+<li><code>names</code> 代表标签名称</li>
+</ul>
+<pre><code>abcdefg
+abcdegf
+abcdfeg
+abcdfge
+abcdgef
+abcdgfe
+abcedfg
+abcedgf
+</code></pre>
+
+<p>darknet在通过文件名与<code>names</code>中的字符串做匹配，匹配到则认为该标签为匹配到的字串。如<code>products/trainval/0000172_abcdefg.jpg</code>，由于<code>names</code>中出现<code>abcdefg</code>，所以这张图的标签为<code>abcdefg</code>。所以图片的路径绝对不可以出现多个<code>names</code>中包含的字串，如果路径为<code>some_path1/data2/3.jpg</code>，<code>names</code>包含<code>1,2,3</code>，则这张图片会被认为匹配多个label从而报错。</p>
+<ul>
+<li><code>top</code> 代表vaild时取前多少计算正确率。如<code>top100</code>代表前分类时概率最大的前100类中出现了正确的标签就认为正确。因为点击验证码存在先验，我们有候选字的范围，可以结合候选字进行破解。</li>
+</ul>
+<h4 id="_9">训练</h4>
+<pre><code class="bash">sh run.sh classifier_train
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href=".." class="btn btn-neutral" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href=".." style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script src="../search/require.js"></script>
+      <script src="../search/search.js"></script>
+
+</body>
+</html>
