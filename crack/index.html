@@ -63,11 +63,15 @@
         
             <li><a class="toctree-l3" href="#_2">训练命令</a></li>
         
-            <li><a class="toctree-l3" href="#_3">目录结构</a></li>
+            <li><a class="toctree-l3" href="#_3">依赖</a></li>
         
-            <li><a class="toctree-l3" href="#_4">定位器训练</a></li>
+            <li><a class="toctree-l3" href="#_4">目录结构</a></li>
         
-            <li><a class="toctree-l3" href="#_7">分类器训练</a></li>
+            <li><a class="toctree-l3" href="#_5">定位器训练</a></li>
+        
+            <li><a class="toctree-l3" href="#_8">分类器训练</a></li>
+        
+            <li><a class="toctree-l3" href="#_11">配置文件生成</a></li>
         
         </ul>
     
@@ -116,7 +120,17 @@
 <li><code>sh run.sh classifier_train</code> - 训练分类器</li>
 <li><code>sh run.sh classifier_valid</code> - 批量前向分类器</li>
 </ul>
-<h2 id="_3">目录结构</h2>
+<h2 id="_3">依赖</h2>
+<p>运行在<code>python2</code>，若使用<code>python3</code>注意darknet生成网络模型字符串需要加<code>b</code>前缀。</p>
+<ul>
+<li><code>opencv3</code></li>
+<li><code>easydict</code></li>
+<li><code>Jinja2</code></li>
+<li><code>Flask</code></li>
+<li><code>scipy</code></li>
+<li><code>numpy</code></li>
+</ul>
+<h2 id="_4">目录结构</h2>
 <pre><code>.
 ├── Makefile
 ├── README.md
@@ -143,11 +157,15 @@
 ├── results                             yolo前向结果保存位置
 │   └── comp4_det_test_character.txt
 ├── run.sh                              训练脚本
+├── requierment.txt                     python依赖                            
+├── train_cfg
+│   ├── *.template                      训练配置模板文件
+│   └── generate.py                     生成模板文件
 ├── scripts                             voc数据集转换脚本
 └── src                                 darknet源代码
 </code></pre>
-<h2 id="_4">定位器训练</h2>
-<h3 id="_5">文件准备</h3>
+<h2 id="_5">定位器训练</h2>
+<h3 id="_6">文件准备</h3>
 <p>准备如下两个文件</p>
 <pre><code>cfg
 ├── yolo-origin.cfg
@@ -217,14 +235,14 @@ products/trainval/0000172_6_2.jpg
 <p><code>backup</code>训练后权重保存位置</p>
 </li>
 </ul>
-<h3 id="_6">训练</h3>
+<h3 id="_7">训练</h3>
 <p>准备好文件后下载对应的权重，开始训练</p>
 <pre><code class="Bash">wget https://pjreddie.com/media/files/darknet19_448.conv.23
 sh run.sh yolo_train
 </code></pre>
 
-<h2 id="_7">分类器训练</h2>
-<h3 id="_8">准备文件</h3>
+<h2 id="_8">分类器训练</h2>
+<h3 id="_9">准备文件</h3>
 <pre><code>cfg
 ├── chinese_character.cfg
 └── chinese.data
@@ -294,8 +312,13 @@ abcedgf
 <ul>
 <li><code>top</code> 代表vaild时取前多少计算正确率。如<code>top100</code>代表前分类时概率最大的前100类中出现了正确的标签就认为正确。因为点击验证码存在先验，我们有候选字的范围，可以结合候选字进行破解。</li>
 </ul>
-<h4 id="_9">训练</h4>
+<h4 id="_10">训练</h4>
 <pre><code class="bash">sh run.sh classifier_train
+</code></pre>
+
+<h2 id="_11">配置文件生成</h2>
+<p>修改<code>train_cfg/generate.py</code>配置。最终配置生成在<code>train_cfg</code>目录下。</p>
+<pre><code class="sh">python train_cfg/generate.py
 </code></pre>
               
             </div>
