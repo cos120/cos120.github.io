@@ -221,6 +221,7 @@ backup = darknet/debug
 <li><code>train</code>代表存放训练数据路径位置文件</li>
 <li><code>valid</code>代表存档前向测试数据路径文件</li>
 </ul>
+<p><code>train.txt</code></p>
 <pre><code>products/trainval/0000172_6_0.jpg
 products/trainval/0000172_6_1.jpg
 products/trainval/0000172_6_2.jpg
@@ -229,7 +230,7 @@ products/trainval/0000172_6_2.jpg
 <p>label与图片在同一文件夹下<img alt="" src="../img/path.png" /></p>
 <ul>
 <li>
-<p><code>names</code>前向时类别名称 (track, dog,bicycle)<img alt="" src="../img/yolo_sample.png" /></p>
+<p><code>names</code>前向时类别名称 (track, dog,bicycle)，在这里为任意一种即可，叫什么都可以。<img alt="" src="../img/yolo_sample.png" /></p>
 </li>
 <li>
 <p><code>backup</code>训练后权重保存位置</p>
@@ -290,6 +291,7 @@ top=100
 <li><code>train</code>代表存放训练数据路径位置文件</li>
 <li><code>valid</code>代表存档前向测试数据路径文件</li>
 </ul>
+<p><code>train.txt</code></p>
 <pre><code>products/trainval/0000172_abcdefg.jpg
 products/trainval/0000173_abcdfge.jpg
 products/trainval/0000174_bcabfge.jpg
@@ -308,7 +310,7 @@ abcedfg
 abcedgf
 </code></pre>
 
-<p>darknet在通过文件名与<code>names</code>中的字符串做匹配，匹配到则认为该标签为匹配到的字串。如<code>products/trainval/0000172_abcdefg.jpg</code>，由于<code>names</code>中出现<code>abcdefg</code>，所以这张图的标签为<code>abcdefg</code>。所以图片的路径绝对不可以出现多个<code>names</code>中包含的字串，如果路径为<code>some_path1/data2/3.jpg</code>，<code>names</code>包含<code>1,2,3</code>，则这张图片会被认为匹配多个label从而报错。</p>
+<p>darknet在通过文件名与<code>names</code>中的字符串做匹配，匹配到则认为该标签为匹配到的字串。如<code>products/trainval/0000172_abcdefg.jpg</code>，由于<code>names</code>中出现<code>abcdefg</code>，所以这张图的标签为<code>abcdefg</code>。所以图片的路径绝对不可以出现多个<code>names</code>中包含的字串，如果路径为<code>some_path1/data2/3.jpg</code>，<code>names中包含</code>1,2,3<code>，则这张图片会被认为匹配1,2,3</code>多个label从而报错。</p>
 <ul>
 <li><code>top</code> 代表vaild时取前多少计算正确率。如<code>top100</code>代表前分类时概率最大的前100类中出现了正确的标签就认为正确。因为点击验证码存在先验，我们有候选字的范围，可以结合候选字进行破解。</li>
 </ul>
