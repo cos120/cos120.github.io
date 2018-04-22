@@ -206,8 +206,13 @@ random=1
 </li>
 <li><code>num</code>代表每个框最多预测多少物体。</li>
 <li><code>classes</code>代表一共有多少个类，这里为1。</li>
-<li><code>coord</code>代表回归的四个位置，分别为<code>&lt;x&gt; &lt;y&gt; &lt;width&gt; &lt;height&gt;</code>代表物体中心点相对位置以及物体相对大小。如<code>你</code>的标签为<code>0 0.2 0.75 0. 16 0.18</code>，<code>好</code>的标签为<code>0 0.7 0.15 0. 15 0. 17</code>。<img alt="label示例" src="../img/axis.png" /></li>
+<li><code>coord</code>代表回归的四个位置，分别为<code>&lt;x&gt; &lt;y&gt; &lt;width&gt; &lt;height&gt;</code>代表物体中心点相对位置以及物体相对大小。如<code>你</code>的标签为<code>0 0.2 0.75 0.16 0.18</code>，<code>好</code>的标签为<code>0 0.7 0.15 0.15 0.17</code>。这张图的标签就是</li>
 </ul>
+<pre><code>0 0.2 0.75 0.16 0.18
+0 0.7 0.15 0.15 0.17
+</code></pre>
+
+<p><img alt="label示例" src="../img/axis.png" /></p>
 <h4 id="yolo-origindata"><code>yolo-origin.data</code></h4>
 <pre><code>classes= 1
 train = /some_path/train.txt
